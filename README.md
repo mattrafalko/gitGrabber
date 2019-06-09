@@ -6,3 +6,5 @@ This is a simple application that searchs github users and dispalys their inform
 
 This project was a practice in using React Hooks.
 Global state was made available by using the useContext API.
+
+Check it out [here](https://gitgrabber.netlify.com/).
