@@ -8,7 +8,8 @@ import {
   SET_LOADING,
   CLEAR_USERS,
   GET_USER,
-  GET_REPOS
+  GET_REPOS,
+  SET_LOADING_FALSE
 } from "../../types";
 
 const GitHubState = props => {
@@ -33,7 +34,7 @@ const GitHubState = props => {
       );
       dispatch({ type: SEARCH_USERS, payload: github_data.data.items });
     } catch {
-      setLoading();
+      setLoadingFalse();
     }
   };
   //Get User
@@ -47,7 +48,7 @@ const GitHubState = props => {
       );
       dispatch({ type: GET_USER, payload: github_data.data });
     } catch {
-      setLoading(false);
+      setLoadingFalse();
     }
   };
   //Get Repos
@@ -61,7 +62,7 @@ const GitHubState = props => {
       );
       dispatch({ type: GET_REPOS, payload: github_data.data });
     } catch {
-      setLoading();
+      setLoadingFalse();
     }
   };
   //Clear Users
@@ -72,6 +73,10 @@ const GitHubState = props => {
   //Set Loading
   const setLoading = () => {
     dispatch({ type: SET_LOADING });
+  };
+
+  const setLoadingFalse = () => {
+    dispatch({ type: SET_LOADING_FALSE });
   };
 
   return (

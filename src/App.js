@@ -1,54 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import Navbar from "./Components/Layout/Navbar";
-import Users from "./Components/Users/Users";
 import User from "./Components/Users/User";
-import Search from "./Components/Search/Search";
 import Alert from "./Components/Layout/Alert";
 import About from "./Components/Pages/About";
+import Home from "./Components/Pages/Home";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
+import NotFound from "./Components/Pages/NotFound";
 //Context
 import GitHubState from "./Context/github/GitHubState";
+import AlertState from "./Context/alert/AlertState";
 
 const App = () => {
-  const [alert, setAlertMessage] = useState(null);
-
-  const setAlert = (message, type) => {
-    setAlertMessage({ message, type });
-    setTimeout(() => {
-      setAlertMessage(null);
-    }, 3000);
-  };
-
   return (
     <GitHubState>
-      <Router>
-        <div className="App">
-          <Navbar />
-          <div className="container">
-            <Alert alert={alert} />
-            <Switch>
-              <Route
-                exact
-                path="/"
-                render={props => (
-                  <React.Fragment>
-                    <Search setAlert={setAlert} />
-                    <Users />
-                  </React.Fragment>
-                )}
-              />
-              <Route
-                exact
-                path="/user/:login"
-                render={props => <User {...props} />}
-              />
-              <Route exact path="/about" render={About} />
-            </Switch>
+      <AlertState>
+        <Router>
+          <div className="App">
+            <Navbar />
+            <div className="container">
+              <Alert />
+              <Switch>
+                <Route exact path="/" render={props => <Home />} />
+                <Route
+                  exact
+                  path="/user/:login"
+                  render={props => <User {...props} />}
+                />
+                <Route exact path="/about" render={About} />
+                <Route render={NotFound} />
+              </Switch>
+            </div>
           </div>
-        </div>
-      </Router>
+        </Router>
+      </AlertState>
     </GitHubState>
   );
 };

@@ -3,7 +3,8 @@ import {
   SET_LOADING,
   CLEAR_USERS,
   GET_USER,
-  GET_REPOS
+  GET_REPOS,
+  SET_LOADING_FALSE
 } from "../../types";
 
 export default (state, action) => {
@@ -18,6 +19,11 @@ export default (state, action) => {
       return {
         ...state,
         loading: true
+      };
+    case SET_LOADING_FALSE:
+      return {
+        ...state,
+        loading: false
       };
     case CLEAR_USERS:
       return {
