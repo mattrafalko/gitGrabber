@@ -15,7 +15,7 @@ class App extends React.Component {
     alert: null,
     users: [],
     user: {},
-    repos: [],
+    repos: []
   };
 
   // async componentDidMount() {
@@ -38,7 +38,12 @@ class App extends React.Component {
       );
       this.setState({ users: github_data.data.items, loading: false });
     } catch {
-      this.setState({ loading: false });
+      this.setState({
+        loading: false
+      });
+      //   alert: { message: "Search Failed.", type: "danger" }
+      // });
+      this.setAlert("Search Failed.", "danger");
     }
   };
 
@@ -56,7 +61,7 @@ class App extends React.Component {
     }
   };
 
-  getUserRepos =async (login)=>{
+  getUserRepos = async login => {
     try {
       this.setState({ loading: true });
       const github_data = await axios.get(
@@ -68,7 +73,7 @@ class App extends React.Component {
     } catch {
       this.setState({ loading: false });
     }
-  }
+  };
 
   clearSearchResults = () => {
     this.setState({ users: [], loading: false });
