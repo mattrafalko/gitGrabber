@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
+import GitHubContext from "../../Context/github/gitHubContext";
 
-const Search = ({
-  searchUsers,
-  showClearButton,
-  clearSearchResults,
-  setAlert
-}) => {
+const Search = ({ setAlert }) => {
+  const gitHubContext = useContext(GitHubContext);
   const [searchText, setSearchText] = useState("");
 
   const onSearchChange = event => {
@@ -18,7 +15,7 @@ const Search = ({
     if (searchText === "") {
       setAlert("Search text cannot be blank", "light");
     } else {
-      searchUsers(searchText);
+      gitHubContext.searchUsers(searchText);
       setSearchText("");
     }
   };
@@ -39,10 +36,10 @@ const Search = ({
           className="btnn btn-dark btn-block"
         />
       </form>
-      {showClearButton ? (
+      {gitHubContext.users.length > 0 ? (
         <button
           className="btn btn-light btn-block"
-          onClick={clearSearchResults}
+          onClick={gitHubContext.clearSearchResults}
         >
           Clear Results
         </button>
@@ -52,9 +49,6 @@ const Search = ({
 };
 
 Search.propTypes = {
-  searchUsers: PropTypes.func.isRequired,
-  clearSearchResults: PropTypes.func.isRequired,
-  showClearButton: PropTypes.bool.isRequired,
   setAlert: PropTypes.func.isRequired
 };
 
