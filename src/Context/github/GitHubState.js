@@ -12,6 +12,17 @@ import {
   SET_LOADING_FALSE
 } from "../../types";
 
+let githubClientID;
+let githubClientSecret;
+
+if (process.env.NODE_ENV !== "production") {
+  githubClientID = process.env.REACT_APP_GITHUB_CLIENT_ID;
+  githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
+} else {
+  githubClientID = process.env.GITHUB_CLIENT_ID;
+  githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+}
+
 const GitHubState = props => {
   const initialState = {
     users: [],
@@ -28,9 +39,7 @@ const GitHubState = props => {
       setLoading();
 
       const github_data = await axios.get(
-        `https://api.github.com/search/users?q=${searchText}&client_id=${
-          process.env.REACT_APP_GITHUB_CLIENT_ID
-        }&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+        `https://api.github.com/search/users?q=${searchText}&client_id=${githubClientID}&client_secret=${githubClientSecret}`
       );
       dispatch({ type: SEARCH_USERS, payload: github_data.data.items });
     } catch {
@@ -42,9 +51,7 @@ const GitHubState = props => {
     try {
       setLoading();
       const github_data = await axios.get(
-        `https://api.github.com/users/${login}?client_id=${
-          process.env.REACT_APP_GITHUB_CLIENT_ID
-        }&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+        `https://api.github.com/users/${login}?client_id=${githubClientID}&client_secret=${githubClientSecret}`
       );
       dispatch({ type: GET_USER, payload: github_data.data });
     } catch {
@@ -56,9 +63,7 @@ const GitHubState = props => {
     try {
       setLoading();
       const github_data = await axios.get(
-        `https://api.github.com/users/${login}/repos?per_page=5&sort=created:asc&client_id=${
-          process.env.REACT_APP_GITHUB_CLIENT_ID
-        }&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+        `https://api.github.com/users/${login}/repos?per_page=5&sort=created:asc&client_id=${githubClientID}&client_secret=${githubClientSecret}`
       );
       dispatch({ type: GET_REPOS, payload: github_data.data });
     } catch {
