@@ -415,7 +415,7 @@ table th {
 .spinner,
 .spinner:before,
 .spinner:after {
-  background: #ff1520;
+  background: #dc3545;
   animation: load1 1s infinite ease-in-out;
   width: 1em;
   height: 4em;
